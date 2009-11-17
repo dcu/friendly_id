@@ -162,6 +162,17 @@ class SluggedModelTest < Test::Unit::TestCase
       assert Thing.find(2147483647)
     end
 
+    context "when table does not exist" do
+      setup do
+      end
+
+      should "not raise an error" do
+        assert_nothing_raised do
+          Question.has_friendly_id :title, :use_slug => true
+        end
+      end
+    end
+
     context "and configured to strip diacritics" do
       setup do
         Post.friendly_id_options = Post.friendly_id_options.merge(:strip_diacritics => true)
