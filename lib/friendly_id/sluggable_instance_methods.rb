@@ -4,7 +4,7 @@ module FriendlyId::SluggableInstanceMethods
     base.has_many :slugs, :order => 'id DESC', :as => :sluggable, :dependent => :destroy
     base.before_save :set_slug
     base.after_save :set_slug_cache
-    unless base.friendly_id_options[:cache_column]
+    unless base.friendly_id_options[:cache_column] || !base.table_exists?
       if base.columns.any? { |c| c.name == 'cached_slug' }
         base.friendly_id_options[:cache_column] = :cached_slug
       end
